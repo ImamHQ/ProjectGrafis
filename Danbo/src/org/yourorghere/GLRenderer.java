@@ -6,9 +6,11 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
 public class GLRenderer implements GLEventListener {
+
     float angle = 0;
     float direction = 1;
     int pergerakan;
+
     class vector {
 
         float x;
@@ -57,9 +59,9 @@ public class GLRenderer implements GLEventListener {
     boolean ori = true;
 
     /*
-ini adalah metod untuk melakukan pergerakan.
-magnitude adalah besarnya gerakan sedangkan direction digunakan untuk menentukan arah.
-gunakan -1 untuk arah berlawanan dengan vektor awal
+     ini adalah metod untuk melakukan pergerakan.
+     magnitude adalah besarnya gerakan sedangkan direction digunakan untuk menentukan arah.
+     gunakan -1 untuk arah berlawanan dengan vektor awal
      */
     private void vectorMovement(vector toMove, float magnitude, float direction) {
         float speedX = toMove.x * magnitude * direction;
@@ -145,33 +147,28 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         glu.gluLookAt(Cx, Cy, Cz,
                 Lx, Ly, Lz,
                 Sumbu_y.x, Sumbu_y.y, Sumbu_y.z);
-        
+
         gl.glTranslatef(-2, 7, -20f);
-        gl.glRotatef(90, 1, 0 , 0);
+        gl.glRotatef(90, 1, 0, 0);
         Objek.kepala(gl);
         gl.glTranslatef(1f, 0.5f, 3f);
         Objek.badan(gl);
         gl.glTranslatef(3f, 0.5f, 1f);
         Objek.tangankanan(gl);
-        
-        angle += direction;//
-        if(angle >= 45 || angle <= -45){
-            direction = -direction;
-        }
-        
         gl.glTranslatef(-4f, 0f, 0f);
         Objek.tangankiri(gl);
         gl.glTranslatef(2.85f, 0f, 3f);
         Objek.kakikanan(gl);
         gl.glTranslatef(-1.69f, 0f, 0f);
         Objek.kakikiri(gl);
-//        gl.glTranslatef(0f, 4f, 0f);
-//        Objek.Mata(gl);
-//        gl.glTranslatef(1.5f, 0f, 0f);
-//        Objek.Mata(gl);
-        
+        gl.glTranslatef(0f, 2f, -6.5f);
+        gl.glRotatef(90, 1, 0, 0);
+        Objek.Mata(gl);
+        gl.glTranslatef(1.5f, 0f, 0f);
+        Objek.Mata(gl);
+
         gl.glFlush();
-        
+
     }
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
@@ -190,9 +187,7 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         } //huruf D
         else if (keyCode == 87) {
             vectorMovement(Sumbu_z, 2f, -1f);
-        } 
-        
-        //huruf J
+        } //huruf J
         else if (keyCode == 74) {
             sudut_z += 15f; //sudut terhadap z
             Sumbu_z.vectorRotation(Sumbu_y, sudut_z - sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
@@ -221,6 +216,6 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
             cameraRotation(Sumbu_y, sudut_z - sudut_z2); //look at
             sudut_z2 = sudut_z; //nyimpan sudut akhir
         }
-      
+
     }
 }
