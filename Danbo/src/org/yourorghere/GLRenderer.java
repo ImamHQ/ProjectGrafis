@@ -190,13 +190,7 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         } //huruf D
         else if (keyCode == 87) {
             vectorMovement(Sumbu_z, 2f, -1f);
-        } //panah atas
-        else if (keyCode == 38) {
-            vectorMovement(Sumbu_y, 2f, 1f);
-        } //panah bawah
-        else if (keyCode == 40) {
-            vectorMovement(Sumbu_y, 2f, -1f);
-        }
+        } 
         
         //huruf J
         else if (keyCode == 74) {
