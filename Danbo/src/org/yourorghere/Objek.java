@@ -13,8 +13,28 @@ import javax.media.opengl.GL;
  */
 public class Objek {
 
-    static void kepala(GL gl) {
+    static void Mata(GL gl) {
 
+        //warna benda
+        gl.glColor3f(1, 1, 1);
+        double PI = 3.141592653589793;
+        int i, radius, jumlah_titik, x_tengah, y_tengah;
+        radius = 25;
+        jumlah_titik = 30;
+        x_tengah = 50;
+        y_tengah = 50;
+        gl.glBegin(GL.GL_POLYGON);
+        for (i = 0; i < jumlah_titik; i++) {
+            float sudut;
+            sudut = (float) (i * (2 * PI / jumlah_titik));
+            float x = (float) (x_tengah + radius * Math.cos(sudut));
+            float y = (float) (y_tengah + radius * Math.sin(sudut));
+            gl.glVertex2f(x / 100, y / 100);
+        }
+        gl.glEnd();
+    }
+
+    static void kepala(GL gl) {
         gl.glBegin(GL.GL_POLYGON);//kiri
         gl.glColor3f(0.82f, 0.70f, 0.39f);
         gl.glVertex3f(0, 0, 0);//1
