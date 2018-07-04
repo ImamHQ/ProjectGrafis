@@ -2,30 +2,70 @@ package org.yourorghere;
 
 import com.sun.opengl.util.Animator;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.EventQueue;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.media.opengl.GLCanvas;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.glu.GLU;
+import javax.media.opengl.GLCapabilities;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
-public class Danbo implements GLEventListener, MouseListener, MouseMotionListener {
-    float x = 0;
-    float z = 0;
+public class Danbo extends JFrame {
 
-    public static void main(String[] args) {
-        Frame frame = new Frame("Pertemuan 3 - Objek 3 Dimensi");
-        GLCanvas canvas = new GLCanvas();
-        canvas.addGLEventListener(new Danbo());
-        frame.add(canvas);
-        frame.setSize(640, 480);
-        final Animator animator = new Animator(canvas);
-        frame.addWindowListener(new WindowAdapter() {
+    static {
+        JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+    }
+    private Animator animator;
+
+    /**
+     * Creates new form MainFrame
+     */
+    public Danbo() {
+        initComponents();
+        final GLRenderer glrender = new GLRenderer();
+        KeyListener mylisterner = new KeyListener() {
+            public void keyTyped(KeyEvent e) {
+                System.out.println("typed " + e.getKeyCode());
+            }
+
+            public void keyPressed(KeyEvent e) {
+                System.out.println("pressed " + e.getKeyCode());
+                glrender.Key_Pressed(e.getKeyCode());
+                canvas.repaint();
+            }
+
+            public void keyReleased(KeyEvent e) {
+                System.out.println("released " + e.getKeyCode());
+            }
+        };
+        canvas.addGLEventListener(glrender);
+        Timer mytimer = new Timer();
+        TimerTask mytimertask = new TimerTask() {
+            @Override
+            public void run() {
+                canvas.repaint();
+            }
+        };
+        mytimer.schedule(mytimertask, 100, 100);
+        addKeyListener(mylisterner);
+        animator = new Animator(canvas);
+        this.setLocationRelativeTo(null);
+        this.setSize(600, 400);
+        animator = new Animator(canvas);
+        canvas.setMinimumSize(new Dimension());
+        this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 new Thread(new Runnable() {
@@ -36,123 +76,71 @@ public class Danbo implements GLEventListener, MouseListener, MouseMotionListene
                 }).start();
             }
         });
-// Center frame
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        animator.start();
-    }
-    private float view_rotx = 20.0f;
-    private float view_roty = 30.0f;
-    private int oldMouseX;
-    private int oldMouseY;
-
-    public void init(GLAutoDrawable drawable) {
-        GL gl = drawable.getGL();
-        System.err.println("INIT GL IS: " + gl.getClass().getName());
-// Enable VSync
-       
-        
-        
-        
-        gl.glClearColor(1f, 1f, 1.0f, 1.0f);
-        gl.glShadeModel(GL.GL_SMOOTH);
-        
-        drawable.addMouseListener(this);
-        drawable.addMouseMotionListener(this);
-         
     }
 
-    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-        GL gl = drawable.getGL();
-        GLU glu = new GLU();
-        if (height <= 0) {
-            height = 1;
+    @Override
+    public void setVisible(boolean show) {
+        if (!show) {
+            animator.stop();
         }
-        final float h = (float) width / (float) height;
-        gl.glViewport(0, 0, width, height);
-        gl.glMatrixMode(GL.GL_PROJECTION);
-        gl.glLoadIdentity();
-        glu.gluPerspective(45.0f, h, 1.0, 20.0);
-        gl.glMatrixMode(GL.GL_MODELVIEW);
-        gl.glLoadIdentity();
+        super.setVisible(show);
+        if (!show) {
+            animator.start();
+        }
     }
 
-    public void display(GLAutoDrawable drawable) {
-        GL gl = drawable.getGL();
-        GLU glu = new GLU();
-        x += 5;
-// Clear the drawing area
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-// Reset the current matrix to the "identity"
-        gl.glLoadIdentity();
-        
-        
-        
-        gl.glTranslatef(0, 0, -15f);
-        gl.glRotatef(view_rotx, 1.0f, 0.0f, 0.0f);
-        gl.glRotatef(view_roty, 0.0f, 1.0f, 0.0f);
-        Objek.kepala(gl);
-//        gl.glTranslatef(0, -4, 0);
-//        Objek.kaki(gl);
-//        gl.glTranslatef(7, 0, 0);
-//        Objek.kaki(gl);
-//        gl.glTranslatef(0, 0, 7);
-//        Objek.kaki(gl);
-//        gl.glTranslatef(-7, 0, 0);
-//        Objek.kaki(gl);
-        gl.glTranslatef(1f, 0.5f, 3f);
-        Objek.badan(gl);
-        gl.glTranslatef(3f, 0.5f, 1f);
-        Objek.tangankanan(gl);
-        gl.glTranslatef(-4f, 0f, 0f);
-        Objek.tangankiri(gl);
-        gl.glTranslatef(2.85f, 0f, 3f);
-        Objek.kakikanan(gl);
-        gl.glTranslatef(-1.69f, 0f, 0f);
-        Objek.kakikiri(gl);
-        gl.glTranslatef(0f, 2f, -6.5f);
-        gl.glRotatef(90, 1, 0, 0);
-        Objek.Mata(gl);
-        gl.glTranslatef(1.5f, 0f, 0f);
-        Objek.Mata(gl);
-       
-        
-        
-        gl.glFlush();
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        JLabel label = new JLabel();
+        canvas = new GLCanvas(createGLCapabilites());
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                                        .addComponent(canvas,
+                                                GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                                        .addComponent(label))
+                                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(label)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(canvas,
+                                        GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+        pack();
     }
 
-    public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
+    private GLCapabilities createGLCapabilites() {
+        GLCapabilities capabilities = new GLCapabilities();
+        capabilities.setHardwareAccelerated(true);
+// try to enable 2x anti aliasing - should besupported on most hardware
+        capabilities.setNumSamples(2);
+        capabilities.setSampleBuffers(true);
+        return capabilities;
     }
 
-    public void mouseClicked(MouseEvent e) {
+    public static void main(String args[]) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()
+                 );
+}catch (Exception ex) {
+    Logger.getLogger(getClass().getName()).log(Level.INFO, "cannot enable system look and feel", ex);
+}
+Danbo frame = new Danbo();
+                frame.setVisible(true);
+            }
+        });
     }
-
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
-    }
-
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    public void mousePressed(MouseEvent e) {
-        oldMouseX = e.getX();
-        oldMouseY = e.getY();
-    }
-
-    public void mouseDragged(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-        Dimension size = e.getComponent().getSize();
-        float thetaY = 360.0f * ((float) (x - oldMouseX) / (float) size.width);
-        float thetaX = 360.0f * ((float) (oldMouseY - y) / (float) size.height);
-        oldMouseX = x;
-        oldMouseY = y;
-        view_rotx += thetaX;
-        view_roty += thetaY;
-    }
-
-    public void mouseMoved(MouseEvent e) {
-    }
+    private GLCanvas canvas;
 }
