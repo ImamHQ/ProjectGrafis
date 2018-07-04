@@ -226,13 +226,7 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
             Sumbu_x.vectorRotation(Sumbu_y, sudut_z - sudut_z2);
             cameraRotation(Sumbu_y, sudut_z - sudut_z2); //look at
             sudut_z2 = sudut_z; //nyimpan sudut akhir
-        }//huruf O
-        else if (keyCode == 79) {
-            sudut_z += 15f; //sudut terhadap z
-            Sumbu_z.vectorRotation(Sumbu_x, sudut_z - sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
-            Sumbu_y.vectorRotation(Sumbu_x, sudut_z - sudut_z2);
-            cameraRotation(Sumbu_y, sudut_z - sudut_z2); //look at
-            sudut_z2 = sudut_z; //nyimpan sudut akhir
         }
+      
     }
 }
