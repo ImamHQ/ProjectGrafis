@@ -4,12 +4,13 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
+import java.io.File;
+import com.sun.opengl.util.texture.Texture;
+import com.sun.opengl.util.texture.TextureIO;
 
 public class GLRenderer implements GLEventListener {
 
-    float angle = 0;
-    float direction = 1;
-    int pergerakan;
+    Texture texture, texture1;
 
     class vector {
 
@@ -59,9 +60,9 @@ public class GLRenderer implements GLEventListener {
     boolean ori = true;
 
     /*
-     ini adalah metod untuk melakukan pergerakan.
-     magnitude adalah besarnya gerakan sedangkan direction digunakan untuk menentukan arah.
-     gunakan -1 untuk arah berlawanan dengan vektor awal
+ini adalah metod untuk melakukan pergerakan.
+magnitude adalah besarnya gerakan sedangkan direction digunakan untuk menentukan arah.
+gunakan -1 untuk arah berlawanan dengan vektor awal
      */
     private void vectorMovement(vector toMove, float magnitude, float direction) {
         float speedX = toMove.x * magnitude * direction;
@@ -107,18 +108,13 @@ public class GLRenderer implements GLEventListener {
         System.err.println("INIT GL IS: " + gl.getClass().getName());
 // Enable VSync
         gl.setSwapInterval(1);
-        float ambient[] = {1.0f, 1.0f, 1.0f, 1.0f};
-        float diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-        float position[] = {1.0f, 1.0f, 1.0f, 0.0f};
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, ambient, 0);
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, diffuse, 0);
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, position, 0);
-        gl.glEnable(GL.GL_LIGHT0);
-        gl.glEnable(GL.GL_LIGHTING);
-        gl.glEnable(GL.GL_DEPTH_TEST);
-        gl.glClearColor(1f, 1f, 1.0f, 1.0f);
+        try {
+            Warna = TextureIO.newTexture(new File("C:\\Users\\HAQI\\Documents\\NetBeansProjects\\RobotC\\src\\org\\yourorghere\\kardu2.jpg"), true);
+        } catch (Exception e) {
+        }
+        gl.glClearColor(0f, 0f, 0.0f, 1.0f);
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glShadeModel(GL.GL_SMOOTH);
-//gl.glShadeModel(GL.GL_SMOOTH); // try setting this to GL_FLAT and see what happens.
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -135,6 +131,7 @@ public class GLRenderer implements GLEventListener {
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
+    Texture Warna;
 
     public void display(GLAutoDrawable drawable) {
         GL gl = drawable.getGL();
@@ -150,23 +147,43 @@ public class GLRenderer implements GLEventListener {
 
         gl.glTranslatef(-2, 7, -20f);
         gl.glRotatef(90, 1, 0, 0);
+        Warna.enable();
+        Warna.bind();
         Objek.kepala(gl);
+        Warna.disable();
         gl.glTranslatef(1f, 0.5f, 3f);
+        Warna.enable();
+        Warna.bind();
         Objek.badan(gl);
+        Warna.disable();
         gl.glTranslatef(3f, 0.5f, 1f);
+        Warna.enable();
+        Warna.bind();
         Objek.tangankanan(gl);
+        Warna.disable();
         gl.glTranslatef(-4f, 0f, 0f);
+        Warna.enable();
+        Warna.bind();
         Objek.tangankiri(gl);
+        Warna.disable();
         gl.glTranslatef(2.85f, 0f, 3f);
+        Warna.enable();
+        Warna.bind();
         Objek.kakikanan(gl);
+        Warna.disable();
         gl.glTranslatef(-1.69f, 0f, 0f);
+        Warna.enable();
+        Warna.bind();
         Objek.kakikiri(gl);
-        gl.glTranslatef(0f, 2f, -6.5f);
+        Warna.disable();
+        gl.glTranslatef(0f, 1.5f, -6.8f);
         gl.glRotatef(90, 1, 0, 0);
         Objek.Mata(gl);
         gl.glTranslatef(1.5f, 0f, 0f);
         Objek.Mata(gl);
-
+        gl.glTranslatef(0.3f, 1.7f, 0f);
+         gl.glRotatef(90, 0, 0, 1);
+        Objek.Mulut(gl);
         gl.glFlush();
 
     }
@@ -187,6 +204,12 @@ public class GLRenderer implements GLEventListener {
         } //huruf D
         else if (keyCode == 87) {
             vectorMovement(Sumbu_z, 2f, -1f);
+        } //panah atas
+        else if (keyCode == 38) {
+            vectorMovement(Sumbu_y, 2f, 1f);
+        } //panah bawah
+        else if (keyCode == 40) {
+            vectorMovement(Sumbu_y, 2f, -1f);
         } //huruf J
         else if (keyCode == 74) {
             sudut_z += 15f; //sudut terhadap z
@@ -215,7 +238,13 @@ public class GLRenderer implements GLEventListener {
             Sumbu_x.vectorRotation(Sumbu_y, sudut_z - sudut_z2);
             cameraRotation(Sumbu_y, sudut_z - sudut_z2); //look at
             sudut_z2 = sudut_z; //nyimpan sudut akhir
+        }//huruf O
+        else if (keyCode == 79) {
+            sudut_z += 15f; //sudut terhadap z
+            Sumbu_z.vectorRotation(Sumbu_x, sudut_z - sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
+            Sumbu_y.vectorRotation(Sumbu_x, sudut_z - sudut_z2);
+            cameraRotation(Sumbu_y, sudut_z - sudut_z2); //look at
+            sudut_z2 = sudut_z; //nyimpan sudut akhir
         }
-
     }
 }

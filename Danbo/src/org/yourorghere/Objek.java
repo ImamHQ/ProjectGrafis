@@ -15,17 +15,7 @@ public class Objek {
 
     static void Mata(GL gl) {
 
-        //warna benda
-        float amb[] = {0f,0f,0f,1.0f};
-        float diff[] = {0.f,0f,0f,10f};
-        float spec[] = {0f,0f,0f,1.0f};
-        float shine = 200;
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, amb, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, diff, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, spec, 0);
-        gl.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, shine);
-        
-        
+        gl.glColor3f(1, 1, 1);
         double PI = 3.141592653589793;
         int i, radius, jumlah_titik, x_tengah, y_tengah;
         radius = 25;
@@ -44,16 +34,6 @@ public class Objek {
     }
 
     static void kepala(GL gl) {
-        //warna benda
-        float amb[] = {1.0f,0.51f,0.0f,1.0f};
-        float diff[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float spec[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float shine = 200;
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, amb, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, diff, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, spec, 0);
-        gl.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, shine);
-        
         gl.glBegin(GL.GL_POLYGON);//kiri
         gl.glColor3f(0.82f, 0.70f, 0.39f);
         gl.glVertex3f(0, 0, 0);//1
@@ -104,16 +84,6 @@ public class Objek {
     }
 
     static void badan(GL gl) {
-        //warna benda
-        float amb[] = {1.0f,0.51f,0.0f,1.0f};
-        float diff[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float spec[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float shine = 200;
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, amb, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, diff, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, spec, 0);
-        gl.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, shine);
-        
         gl.glBegin(GL.GL_POLYGON);//kiri
         gl.glColor3f(0.82f, 0.70f, 0.39f);
         gl.glVertex3f(0, 0, 0);//1
@@ -164,16 +134,6 @@ public class Objek {
     }
 
     static void tangankanan(GL gl) {
-        //warna benda
-        float amb[] = {1.0f,0.51f,0.0f,1.0f};
-        float diff[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float spec[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float shine = 200;
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, amb, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, diff, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, spec, 0);
-        gl.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, shine);
-        
         gl.glBegin(GL.GL_POLYGON);//kiri
         gl.glColor3f(0.82f, 0.70f, 0.39f);
         gl.glVertex3f(0, 0, 0);//1
@@ -224,16 +184,6 @@ public class Objek {
     }
 
     static void tangankiri(GL gl) {
-        //warna benda
-        float amb[] = {1.0f,0.51f,0.0f,1.0f};
-        float diff[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float spec[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float shine = 200;
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, amb, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, diff, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, spec, 0);
-        gl.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, shine);
-        
         gl.glBegin(GL.GL_POLYGON);//kiri
         gl.glColor3f(0.82f, 0.70f, 0.39f);
         gl.glVertex3f(0, 0, 0);//1
@@ -284,16 +234,6 @@ public class Objek {
     }
 
     static void kakikanan(GL gl) {
-        //warna benda
-        float amb[] = {1.0f,0.51f,0.0f,1.0f};
-        float diff[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float spec[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float shine = 200;
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, amb, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, diff, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, spec, 0);
-        gl.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, shine);
-        
         gl.glBegin(GL.GL_POLYGON);//kiri
         gl.glColor3f(0.82f, 0.70f, 0.39f);
         gl.glVertex3f(0, 0, 0);//1
@@ -344,16 +284,6 @@ public class Objek {
     }
 
     static void kakikiri(GL gl) {
-        //warna benda
-        float amb[] = {1.0f,0.51f,0.0f,1.0f};
-        float diff[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float spec[] = {0.07568f,0.1f,0.07568f,1.0f};
-        float shine = 200;
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_AMBIENT, amb, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE, diff, 0);
-        gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, spec, 0);
-        gl.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, shine);
-        
         gl.glBegin(GL.GL_POLYGON);//kiri
         gl.glColor3f(0.82f, 0.70f, 0.39f);
         gl.glVertex3f(0, 0, 0);//1
@@ -403,4 +333,13 @@ public class Objek {
         gl.glEnd();
     }
 
+    static void Mulut(GL gl) {
+        gl.glBegin(GL.GL_POLYGON);
+        gl.glColor3f(1f, 1f, 1f);
+        gl.glVertex3f(0, 0, 0);//1
+        gl.glVertex3f(0.4f, 0.5f, 0);//2
+        gl.glVertex3f(0, 1f, 0);//3
+       
+        gl.glEnd();
+    }
 }
