@@ -57,7 +57,15 @@ public class GLRenderer implements GLEventListener {
     float sudut_z2 = 0f;
     float sudut_y = 0f;
     float sudut_y2 = 0f;
-    boolean ori = true;
+    float sudutKakikanan = -20;
+    float sudutKakikiri = 20;
+    float sudutTangankanan = -20;
+    float sudutTangankiri = 20;
+    double tmbhSudut1 = 5;
+    double tmbhSudut2 = 5;
+    double tmbhSudut3 = 5;
+    double tmbhSudut4 = 5;
+    boolean ori = true, tangankanan,tangankiri,kakikiri,kakikanan = false;
 
     /*
 ini adalah metod untuk melakukan pergerakan.
@@ -109,7 +117,7 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
 // Enable VSync
         gl.setSwapInterval(1);
         try {
-            Warna = TextureIO.newTexture(new File("C:\\Users\\HAQI\\Documents\\NetBeansProjects\\RobotC\\src\\org\\yourorghere\\kardu2.jpg"), true);
+            Warna = TextureIO.newTexture(new File("C:\\Users\\HAQI\\Documents\\NetBeansProjects\\RobotC\\src\\org\\yourorghere\\kardus.jpg"), true);
         } catch (Exception e) {
         }
         gl.glClearColor(0f, 0f, 0.0f, 1.0f);
@@ -145,45 +153,85 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
                 Lx, Ly, Lz,
                 Sumbu_y.x, Sumbu_y.y, Sumbu_y.z);
 
-        gl.glTranslatef(-2, 7, -20f);
-        gl.glRotatef(90, 1, 0, 0);
+        gl.glRotatef(90, 1.0f, 0.0f, 0.0f);
+        gl.glTranslatef(-2.5f, -16.0f, -7.0f);
         Warna.enable();
         Warna.bind();
         Objek.kepala(gl);
         Warna.disable();
-        gl.glTranslatef(1f, 0.5f, 3f);
+        gl.glPushMatrix();
+        gl.glPushMatrix();
+        gl.glPushMatrix();
+        gl.glPushMatrix();
+        gl.glTranslatef(1.0f, 0.5f, 3.0f);
         Warna.enable();
         Warna.bind();
         Objek.badan(gl);
         Warna.disable();
-        gl.glTranslatef(3f, 0.5f, 1f);
+        gl.glPopMatrix();
+        
+        gl.glTranslatef(-0.2f, 0.5f, 3.3f);
+        gl.glRotatef(sudutTangankanan, 1.0f, 0.0f, 0.0f);
         Warna.enable();
         Warna.bind();
         Objek.tangankanan(gl);
         Warna.disable();
-        gl.glTranslatef(-4f, 0f, 0f);
+        gl.glPopMatrix();
+        
+        gl.glTranslatef(4.1f, 0.5f, 3.3f);
+        gl.glRotatef(sudutTangankiri, 1.0f, 0.0f, 0.0f);
         Warna.enable();
         Warna.bind();
         Objek.tangankiri(gl);
         Warna.disable();
-        gl.glTranslatef(2.85f, 0f, 3f);
+        gl.glPopMatrix();
+        
+        gl.glTranslatef(1.3f, 0.5f, 7.0f);
+        gl.glRotatef(sudutKakikanan, 1.0f, 0.0f, 0.0f);
         Warna.enable();
         Warna.bind();
         Objek.kakikanan(gl);
         Warna.disable();
-        gl.glTranslatef(-1.69f, 0f, 0f);
+        gl.glPopMatrix();
+        
+        gl.glTranslatef(2.8f, 0.5f, 7.0f);
+        gl.glRotatef(sudutKakikiri, 1.0f, 0.0f, 0.0f);
         Warna.enable();
         Warna.bind();
         Objek.kakikiri(gl);
         Warna.disable();
-        gl.glTranslatef(0f, 1.5f, -6.8f);
-        gl.glRotatef(90, 1, 0, 0);
-        Objek.Mata(gl);
-        gl.glTranslatef(1.5f, 0f, 0f);
-        Objek.Mata(gl);
-        gl.glTranslatef(0.3f, 1.7f, 0f);
-         gl.glRotatef(90, 0, 0, 1);
-        Objek.Mulut(gl);
+        gl.glPopMatrix();
+        
+//        gl.glTranslatef(-1.5f, 1.5f, -6.8f);
+//        gl.glRotatef(90, 1, 0, 0);
+//        Objek.Mata(gl);
+//        gl.glTranslatef(1.5f, 0f, 0f);
+//        Objek.Mata(gl);
+//        gl.glTranslatef(0.3f, 1.7f, 0f);
+//        gl.glRotatef(90, 0, 0, 1);
+//        Objek.Mulut(gl);
+//        
+        
+        if(tangankanan){
+        sudutTangankanan += tmbhSudut1;//
+        if(sudutTangankanan >= 45 || sudutTangankanan <= -45){
+            tmbhSudut1 = -tmbhSudut1;
+            }
+        }
+        if(tangankiri){
+        sudutTangankiri += tmbhSudut2;//
+        if(sudutTangankiri >= 45 || sudutTangankiri <= -45){
+            tmbhSudut2 = -tmbhSudut2;
+            }
+        }
+        sudutKakikanan += tmbhSudut3;//
+        if(sudutKakikanan >= 30 || sudutKakikanan <= -30){
+            tmbhSudut3 = -tmbhSudut3;
+        }
+        sudutKakikiri += tmbhSudut4;//
+        if(sudutKakikiri >= 30 || sudutKakikiri <= -30){
+            tmbhSudut4 = -tmbhSudut4;
+        }
         gl.glFlush();
 
     }
@@ -210,7 +258,22 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         } //panah bawah
         else if (keyCode == 40) {
             vectorMovement(Sumbu_y, 2f, -1f);
-        } //huruf J
+        }
+        else if (keyCode == 48) {
+            if (tangankanan) {
+                tangankanan = false;
+            } else {
+                tangankanan = true;
+            }
+        }
+        else if (keyCode == 57) {
+            if (tangankiri) {
+                tangankiri = false;
+            } else {
+                tangankiri = true;
+            }
+        }
+        //huruf J
         else if (keyCode == 74) {
             sudut_z += 15f; //sudut terhadap z
             Sumbu_z.vectorRotation(Sumbu_y, sudut_z - sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
